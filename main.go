@@ -72,7 +72,12 @@ func deflate(body []byte) {
 	}
 
 	for _, file := range reader.File {
-		writeFileToDisk(file)
+		if strings.Contains(file.Name, "..") {
+			fmt.Printf("File %v contained illegal path operation .. processing next file.", file.Name)
+			continue
+		} else {
+			writeFileToDisk(file)
+		}
 	}
 }
 
